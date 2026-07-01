@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --color-teal-deep: #093530;
+  --color-teal-light: #0E4B43;
+  --color-copper-deep: #BD5E2C;
+  --color-copper-soft: #E4B696;
+  --color-sand-deep: #E7DCC6;
+  --color-sand-light: #F7F4EE;
+  --color-bg-deep: #EFE9DD;
+  --color-ink: #1B1B19;
+  --color-ok: #3E7A52;
+  --color-busy: #BD5E2C;
+  --color-full: #A23A2E;
+
+  --font-serif: var(--font-lora), serif;
+  --font-sans: var(--font-inter), sans-serif;
+}
+
+body {
+  background-color: var(--color-sand-light);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  line-height: 1.65;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--color-teal-deep);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Base custom classes matching inspiration site signature style */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: var(--color-sand-deep);
+  border: 1px solid var(--color-copper-soft);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-teal-deep);
+  letter-spacing: 0.03em;
+  border-radius: 30px;
+}
+
+/* Winding line animation for path-divider */
+.path-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  margin: 10px 0;
+}
+.path-divider svg {
+  width: 180px;
+  height: 20px;
+}
+.path-divider path {
+  fill: none;
+  stroke: var(--color-copper-deep);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+  animation: draw 2s ease forwards;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
