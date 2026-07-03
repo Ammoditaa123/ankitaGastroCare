@@ -24,8 +24,14 @@ export interface Contact {
   created_at?: string;
 }
 
-// Check if we are running with a Vercel Postgres instance
-const isPostgresEnabled = !!process.env.POSTGRES_URL;
+// Check if we are running with a Vercel Postgres/Neon instance
+const isVercel = process.env.VERCEL === '1';
+const isPostgresEnabled = isVercel || !!process.env.POSTGRES_URL || !!process.env.DATABASE_URL;
+
+// If Postgres is enabled, verify POSTGRES_URL is populated for the Vercel Postgres client
+if (isPostgresEnabled && !process.env.POSTGRES_URL) {
+  process.env.POSTGRES_URL = process.env.DATABASE_URL || '';
+}
 
 // Local JSON File Database Fallback (for local development with zero config)
 const dataDir = path.join(process.cwd(), 'data');
