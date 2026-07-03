@@ -86,15 +86,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check Sunday
-    const day = new Date(date).getDay();
-    if (day === 0) {
-      return NextResponse.json(
-        { success: false, error: 'Clinic is closed on Sundays.' },
-        { status: 400 }
-      );
-    }
-
     // Check double-booking
     const existing = await getBookingsByDate(date);
     const isTaken = existing.some(b => (b.status === 'pending' || b.status === 'confirmed') && b.time === time);
