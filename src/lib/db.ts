@@ -63,8 +63,8 @@ async function initPostgresTables(): Promise<void> {
         phone VARCHAR(255) NOT NULL,
         email VARCHAR(255),
         reason VARCHAR(255) NOT NULL,
-        date VARCHAR(255) NOT NULL,
-        time VARCHAR(255) NOT NULL,
+        "date" VARCHAR(255) NOT NULL,
+        "time" VARCHAR(255) NOT NULL,
         notes TEXT,
         status VARCHAR(50) DEFAULT 'pending',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -96,7 +96,7 @@ export async function addBooking(booking: Omit<Booking, 'created_at'>): Promise<
   if (isPostgresEnabled) {
     await initPostgresTables();
     await sql`
-      INSERT INTO bookings (id, name, phone, email, reason, date, time, notes, status)
+      INSERT INTO bookings (id, name, phone, email, reason, "date", "time", notes, status)
       VALUES (${booking.id}, ${booking.name}, ${booking.phone}, ${booking.email || ''}, ${booking.reason}, ${booking.date}, ${booking.time}, ${booking.notes || ''}, ${booking.status || 'pending'})
     `;
   } else {
@@ -114,7 +114,7 @@ export async function getBookingsByDate(date: string): Promise<Booking[]> {
   if (isPostgresEnabled) {
     await initPostgresTables();
     const { rows } = await sql<Booking>`
-      SELECT * FROM bookings WHERE date = ${date}
+      SELECT * FROM bookings WHERE "date" = ${date}
     `;
     return rows;
   } else {
@@ -192,7 +192,7 @@ export async function updateBookingStatus(
     if (date && time) {
       await sql`
         UPDATE bookings 
-        SET status = ${status}, date = ${date}, time = ${time} 
+        SET status = ${status}, "date" = ${date}, "time" = ${time} 
         WHERE id = ${id}
       `;
     } else {
@@ -222,7 +222,7 @@ export async function getAllBookings(): Promise<Booking[]> {
   if (isPostgresEnabled) {
     await initPostgresTables();
     const { rows } = await sql<Booking>`
-      SELECT * FROM bookings ORDER BY date DESC, time ASC
+      SELECT * FROM bookings ORDER BY "date" DESC, "time" ASC
     `;
     return rows;
   } else {
